@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nutri-guia-omega.vercel.app/sitemap.xml
