@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { CategoryPage } from './pages/CategoryPage';
@@ -15,7 +16,7 @@ import { AuthProvider } from './context/AuthContext';
 function App() {
   return (
     <AuthProvider>
-      <HashRouter>
+      <Router>
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -26,10 +27,11 @@ function App() {
             <Route path="/bonus/:id" element={<BonusCategoryPage />} />
             <Route path="/shopping-list" element={<ShoppingList />} />
             <Route path="/weekly-menu" element={<WeeklyMenu />} />
+            <Route path="*" element={<Home />} />
           </Routes>
           <NutriChat />
         </Layout>
-      </HashRouter>
+      </Router>
     </AuthProvider>
   );
 }
