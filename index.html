@@ -7,13 +7,18 @@
     <title>NutriGuia | Guia de Nutrição Inteligente</title>
     <meta name="description" content="Aprenda sobre nutrição, calcule seu IMC e gere cardápios com IA. O guia definitivo para sua saúde." />
     
-    <!-- Preload da imagem de LCP (Hero) para carregar antes do JS -->
+    <!-- Module Preload para carregar JS crítico em paralelo -->
+    <link rel="modulepreload" href="https://esm.sh/react@18.2.0">
+    <link rel="modulepreload" href="https://esm.sh/react-dom@18.2.0">
+    <link rel="modulepreload" href="https://esm.sh/lucide-react@0.344.0">
+
+    <!-- Preload da imagem de LCP -->
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60" fetchpriority="high">
     
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://esm.sh">
     
-    <!-- Preload de fontes críticas -->
+    <!-- Fontes combinadas em uma única requisição -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
@@ -57,21 +62,24 @@
 }
 </script>
     <style>
-      /* CSS Crítico Inlined para evitar FOUC e melhorar FCP */
-      body { margin: 0; background-color: #F4F6F8; color: #333333; -webkit-font-smoothing: antialiased; font-family: 'Inter', sans-serif; }
+      /* CSS Crítico para evitar layout shift e garantir FCP rápido */
+      :root { --nutriGreen: #4CAF50; --nutriBg: #F4F6F8; }
+      body { margin: 0; background-color: var(--nutriBg); color: #333333; -webkit-font-smoothing: antialiased; font-family: 'Inter', sans-serif; }
       #root { min-height: 100vh; }
-      .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; background: #F4F6F8; }
-      .spin { animation: spin 1s linear infinite; border: 3px solid #f3f3f3; border-top: 3px solid #4CAF50; border-radius: 50%; width: 30px; height: 30px; display: inline-block; }
+      .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; background: var(--nutriBg); }
+      .spin { animation: spin 0.8s linear infinite; border: 3px solid #e2e8f0; border-top: 3px solid var(--nutriGreen); border-radius: 50%; width: 24px; height: 24px; }
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      .hero-placeholder { background-color: #ffffff; min-height: 400px; }
+      .hero-placeholder { background: white; min-height: 350px; }
+      /* Pre-styling do header para evitar salto visual */
+      nav { height: 64px; background: white; width: 100%; border-bottom: 1px solid #edf2f7; position: sticky; top: 0; z-index: 40; }
     </style>
   </head>
   <body>
     <div id="root">
       <div class="loading-screen">
         <div style="text-align: center;">
-          <h1 style="color: #4CAF50; font-family: 'Poppins', sans-serif; margin-bottom: 10px;">NutriGuia</h1>
-          <div class="spin"></div>
+          <h1 style="color: var(--nutriGreen); font-family: 'Poppins', sans-serif; margin: 0 0 15px 0; font-size: 24px;">NutriGuia</h1>
+          <div class="spin" style="margin: 0 auto;"></div>
         </div>
       </div>
     </div>
