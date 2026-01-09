@@ -7,42 +7,24 @@
     <title>NutriGuia | Guia de Nutrição Inteligente</title>
     <meta name="description" content="Aprenda sobre nutrição, calcule seu IMC e gere cardápios com IA. O guia definitivo para sua saúde." />
     
-    <!-- Module Preload para carregar JS crítico em paralelo -->
-    <link rel="modulepreload" href="https://esm.sh/react@18.2.0">
-    <link rel="modulepreload" href="https://esm.sh/react-dom@18.2.0">
-    <link rel="modulepreload" href="https://esm.sh/lucide-react@0.344.0">
-
-    <!-- Preload da imagem de LCP -->
-    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60" fetchpriority="high">
-    
-    <link rel="dns-prefetch" href="https://images.unsplash.com">
-    <link rel="dns-prefetch" href="https://esm.sh">
-    
-    <!-- Fontes combinadas em uma única requisição -->
+    <!-- Pre-conectar a domínios de ativos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://esm.sh">
+
+    <!-- Preload do JS crítico -->
+    <link rel="modulepreload" href="https://esm.sh/react@18.2.0">
+    <link rel="modulepreload" href="https://esm.sh/react-dom@18.2.0">
+    
+    <!-- Preload da imagem LCP (Hero) -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60" fetchpriority="high">
+
+    <!-- Fontes otimizadas -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      window.process = { env: { API_KEY: "" } };
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              header: ['Poppins', 'sans-serif'],
-            },
-            colors: {
-              nutriGreen: '#4CAF50',
-              nutriOrange: '#FF9800',
-              nutriBg: '#F4F6F8',
-              nutriText: '#333333',
-            }
-          }
-        }
-      }
-    </script>
+    <!-- Tailwind Pre-compilado (Muito mais rápido que o Play CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <script type="importmap">
 {
@@ -61,28 +43,56 @@
   }
 }
 </script>
+    
     <style>
-      /* CSS Crítico para evitar layout shift e garantir FCP rápido */
-      :root { --nutriGreen: #4CAF50; --nutriBg: #F4F6F8; }
-      body { margin: 0; background-color: var(--nutriBg); color: #333333; -webkit-font-smoothing: antialiased; font-family: 'Inter', sans-serif; }
-      #root { min-height: 100vh; }
-      .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; background: var(--nutriBg); }
-      .spin { animation: spin 0.8s linear infinite; border: 3px solid #e2e8f0; border-top: 3px solid var(--nutriGreen); border-radius: 50%; width: 24px; height: 24px; }
+      /* CSS CRÍTICO - Inlined para carregamento instantâneo */
+      :root {
+        --nutriGreen: #4CAF50;
+        --nutriOrange: #FF9800;
+        --nutriBg: #F4F6F8;
+        --nutriText: #333333;
+      }
+      body { 
+        margin: 0; 
+        background-color: var(--nutriBg); 
+        color: var(--nutriText); 
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .font-header { font-family: 'Poppins', sans-serif; }
+      .bg-nutriGreen { background-color: var(--nutriGreen); }
+      .text-nutriGreen { color: var(--nutriGreen); }
+      
+      /* Layout inicial sem JS */
+      nav { height: 64px; background: white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 50; }
+      .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; }
+      .spin { 
+        animation: spin 0.8s linear infinite; 
+        border: 3px solid #eee; 
+        border-top: 3px solid var(--nutriGreen); 
+        border-radius: 50%; width: 24px; height: 24px; 
+      }
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      .hero-placeholder { background: white; min-height: 350px; }
-      /* Pre-styling do header para evitar salto visual */
-      nav { height: 64px; background: white; width: 100%; border-bottom: 1px solid #edf2f7; position: sticky; top: 0; z-index: 40; }
+      
+      /* Utilitários Tailwind básicos necessários para o Hero antes do load total */
+      .bg-white { background-color: #fff; }
+      .relative { position: relative; }
+      .overflow-hidden { overflow: hidden; }
+      .text-center { text-align: center; }
+      .mx-auto { margin-left: auto; margin-right: auto; }
+      .max-w-4xl { max-width: 56rem; }
     </style>
   </head>
   <body>
     <div id="root">
       <div class="loading-screen">
-        <div style="text-align: center;">
-          <h1 style="color: var(--nutriGreen); font-family: 'Poppins', sans-serif; margin: 0 0 15px 0; font-size: 24px;">NutriGuia</h1>
-          <div class="spin" style="margin: 0 auto;"></div>
+        <div class="text-center">
+          <h1 class="font-header text-nutriGreen" style="font-size: 1.5rem; margin-bottom: 0.5rem;">NutriGuia</h1>
+          <div class="spin mx-auto"></div>
         </div>
       </div>
     </div>
+    <script>window.process = { env: { API_KEY: "" } };</script>
     <script type="module" src="index.tsx"></script>
   </body>
 </html>
