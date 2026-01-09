@@ -4,69 +4,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NutriGuia | Guia de Nutrição Inteligente</title>
-    <meta name="description" content="Aprenda sobre nutrição, calcule seu IMC e gere cardápios com IA." />
+    <title>NutriGuia | Nutrição Inteligente</title>
+    <meta name="description" content="Guia de nutrição e cardápios com IA." />
     
-    <!-- Pre-conectar a domínios de ativos para acelerar DNS/Handshake -->
+    <!-- Pre-conectar domínios críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://esm.sh">
     <link rel="preconnect" href="https://images.unsplash.com">
 
-    <!-- CSS Crítico: Inline para renderização instantânea (FCP em < 1s) -->
+    <!-- Quebra de Corrente (Critical Path): Preload do JS e CSS Principal -->
+    <link rel="modulepreload" href="https://esm.sh/react@18.2.0">
+    <link rel="modulepreload" href="https://esm.sh/react-dom@18.2.0">
+    <link rel="modulepreload" href="/index.tsx">
+    
+    <!-- Preload do LCP (Maior Pintura com Conteúdo) -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=600&q=60" fetchpriority="high">
+
+    <!-- CSS Crítico (Inline): Renderização instantânea sem depender de arquivos externos -->
     <style>
       :root {
         --nutriGreen: #4CAF50;
-        --nutriOrange: #FF9800;
         --nutriBg: #F4F6F8;
         --nutriText: #333333;
       }
       body { 
-        margin: 0; 
-        padding: 0;
-        background-color: var(--nutriBg); 
-        color: var(--nutriText); 
-        font-family: 'Inter', -apple-system, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        overflow-x: hidden;
+        margin: 0; padding: 0; background: var(--nutriBg); color: var(--nutriText); 
+        font-family: 'Inter', -apple-system, sans-serif; -webkit-font-smoothing: antialiased;
       }
-      nav { 
-        height: 64px; 
-        background: #fff; 
-        display: flex; 
-        align-items: center; 
-        border-bottom: 1px solid #eee; 
-        position: sticky; 
-        top: 0; 
-        z-index: 50; 
-        width: 100%;
-      }
-      .loading-screen { 
-        display: flex; 
-        flex-direction: column;
-        align-items: center; 
-        justify-content: center; 
-        height: 80vh; 
-      }
+      nav { height: 64px; background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 50; width: 100%; }
+      .hero-mini { background: #fff; padding: 40px 20px; text-align: center; }
+      .font-h { font-family: 'Poppins', sans-serif; font-weight: 700; color: #1f2937; }
       .spin { 
-        animation: spin 0.8s linear infinite; 
-        border: 3px solid #eee; 
-        border-top: 3px solid var(--nutriGreen); 
-        border-radius: 50%; width: 24px; height: 24px; 
+        animation: s 0.6s linear infinite; border: 3px solid #eee; border-top: 3px solid var(--nutriGreen); 
+        border-radius: 50%; width: 24px; height: 24px; margin: 20px auto;
       }
-      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      .hero-section { background: #fff; padding: 48px 16px; text-align: center; min-height: 300px; }
-      .font-header { font-family: 'Poppins', sans-serif; font-weight: 700; }
-      h1 { font-size: 1.875rem; color: #1f2937; margin-bottom: 1rem; }
-      p { color: #4b5563; line-height: 1.5; margin: 0; }
+      @keyframes s { to { transform: rotate(360deg); } }
+      /* Classes utilitárias mínimas para evitar FOUC */
+      .bg-white { background-color: #fff; }
+      .text-center { text-align: center; }
+      .hidden { display: none; }
     </style>
 
-    <!-- Fontes e CSS Carregados de forma assíncrona (Não bloqueia renderização) -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
-    <!-- Preload da Imagem de LCP com Prioridade Máxima -->
-    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60" fetchpriority="high">
+    <!-- Carregamento Assíncrono de CSS não-crítico -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" media="print" onload="this.media='all'">
 
     <script type="importmap">
 {
@@ -88,13 +70,12 @@
   </head>
   <body>
     <div id="root">
-      <!-- Esqueleto do Hero para LCP rápido enquanto o React carrega -->
+      <!-- Esqueleto estático leve para LCP imediato -->
       <nav></nav>
-      <div class="hero-section">
-        <h1 class="font-header">NutriGuia</h1>
-        <div class="loading-screen">
-          <div class="spin"></div>
-        </div>
+      <div class="hero-mini">
+        <h1 class="font-h" style="font-size: 1.8rem;">NutriGuia</h1>
+        <p style="color: #666; font-size: 0.9rem;">Sua alimentação inteligente...</p>
+        <div class="spin"></div>
       </div>
     </div>
     <script>window.process = { env: { API_KEY: "" } };</script>
