@@ -38,16 +38,16 @@ export const Home: React.FC = () => {
   return (
     <div className="space-y-12 pb-12">
       {/* Hero Section Ultra-Otimizada */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
-        {/* Usando tag IMG com fetchPriority para LCP rápido */}
+      <section className="relative py-16 md:py-24 px-4 overflow-hidden bg-white">
         <div className="absolute inset-0 z-0">
             <img 
                 src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60" 
-                alt="" 
+                alt="Alimentos saudáveis sobre uma mesa" 
                 className="w-full h-full object-cover opacity-20"
-                // Fixed: fetchPriority should be camelCase in React to match TypeScript definitions
                 fetchPriority="high"
                 aria-hidden="true"
+                width="800"
+                height="600"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/40 to-nutriBg"></div>
         </div>
