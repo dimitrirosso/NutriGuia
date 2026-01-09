@@ -4,44 +4,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NutriGuia | Guia Visual de Nutrição e Saúde Inteligente</title>
-    <meta name="description" content="Aprenda sobre macronutrientes, calcule seu IMC e gere cardápios inteligentes com IA no NutriGuia. O guia definitivo para sua saúde e alimentação consciente." />
-    <meta name="keywords" content="nutrição, dieta, imc, cardápio ia, proteínas, carboidratos, saúde, emagrecimento, hipertrofia, nutrição inteligente" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://nutri-guia-omega.vercel.app/" />
+    <title>NutriGuia | Guia Visual de Nutrição e Saúde</title>
+    <meta name="description" content="Aprenda sobre macronutrientes, calcule seu IMC e gere cardápios inteligentes com IA. O guia definitivo para sua saúde." />
     
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://nutri-guia-omega.vercel.app/" />
-    <meta property="og:title" content="NutriGuia | Guia Visual de Nutrição" />
-    <meta property="og:description" content="Transforme sua alimentação com inteligência e simplicidade. Guia completo de macronutrientes e IA." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1200&h=630&q=80" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="NutriGuia | Guia Visual de Nutrição" />
-    <meta property="twitter:description" content="Guia visual de alimentos e gerador de cardápios com Inteligência Artificial." />
-
-    <!-- Dados Estruturados para o Google -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "NutriGuia",
-      "operatingSystem": "Web",
-      "applicationCategory": "HealthApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "9.90",
-        "priceCurrency": "BRL"
-      },
-      "description": "Plataforma de educação nutricional com guia de macronutrientes e gerador de dietas via IA."
-    }
-    </script>
-    
+    <!-- Preload de fontes para evitar "pulo" de layout -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -74,44 +44,29 @@
     "@google/genai": "https://esm.sh/@google/genai@1.34.0",
     "lucide-react": "https://esm.sh/lucide-react@0.344.0",
     "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7",
-    "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
     <style>
-      body {
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        background-color: #F4F6F8;
-        color: #333333;
-      }
-      .scrollbar-hide::-webkit-scrollbar { display: none; }
-      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      body { margin: 0; background-color: #F4F6F8; color: #333333; -webkit-font-smoothing: antialiased; }
+      #root { min-height: 100vh; }
+      /* Prevenir shift de layout */
+      .hero-bg { background-image: url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60'); }
     </style>
   </head>
   <body>
-    <!-- Este conteúdo é visível para o Google mesmo antes do JavaScript carregar -->
     <div id="root">
-      <div style="padding: 2rem; text-align: center; font-family: sans-serif;">
-        <h1 style="color: #4CAF50;">NutriGuia</h1>
-        <p>Carregando seu guia de nutrição inteligente...</p>
-        <div style="display: none;">
-          <h2>Calculadora de IMC, Cardápios Semanais e Guia de Macronutrientes</h2>
-          <p>Aprenda sobre Proteínas, Fibras, Carboidratos e Gorduras Boas. Gere sua dieta com IA.</p>
+      <div style="display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif;">
+        <div style="text-align: center;">
+          <h1 style="color: #4CAF50; margin-bottom: 0.5rem;">NutriGuia</h1>
+          <p style="color: #666;">Otimizando para seu celular...</p>
         </div>
       </div>
     </div>
-    
-    <noscript>
-      <div style="padding: 2rem; text-align: center;">
-        <h1>NutriGuia</h1>
-        <p>Você precisa habilitar o JavaScript para acessar este aplicativo de saúde e nutrição.</p>
-      </div>
-    </noscript>
-
     <script type="module" src="index.tsx"></script>
   </body>
 </html>
