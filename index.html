@@ -5,26 +5,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NutriGuia | Guia de Nutrição Inteligente</title>
-    <meta name="description" content="Aprenda sobre nutrição, calcule seu IMC e gere cardápios com IA. O guia definitivo para sua saúde." />
+    <meta name="description" content="Aprenda sobre nutrição, calcule seu IMC e gere cardápios com IA." />
     
-    <!-- Pre-conectar a domínios de ativos -->
+    <!-- Pre-conectar a domínios de ativos para acelerar DNS/Handshake -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://images.unsplash.com">
-    <link rel="preconnect" href="https://esm.sh">
 
-    <!-- Preload do JS crítico -->
-    <link rel="modulepreload" href="https://esm.sh/react@18.2.0">
-    <link rel="modulepreload" href="https://esm.sh/react-dom@18.2.0">
+    <!-- CSS Crítico: Inline para renderização instantânea (FCP em < 1s) -->
+    <style>
+      :root {
+        --nutriGreen: #4CAF50;
+        --nutriOrange: #FF9800;
+        --nutriBg: #F4F6F8;
+        --nutriText: #333333;
+      }
+      body { 
+        margin: 0; 
+        padding: 0;
+        background-color: var(--nutriBg); 
+        color: var(--nutriText); 
+        font-family: 'Inter', -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      nav { 
+        height: 64px; 
+        background: #fff; 
+        display: flex; 
+        align-items: center; 
+        border-bottom: 1px solid #eee; 
+        position: sticky; 
+        top: 0; 
+        z-index: 50; 
+        width: 100%;
+      }
+      .loading-screen { 
+        display: flex; 
+        flex-direction: column;
+        align-items: center; 
+        justify-content: center; 
+        height: 80vh; 
+      }
+      .spin { 
+        animation: spin 0.8s linear infinite; 
+        border: 3px solid #eee; 
+        border-top: 3px solid var(--nutriGreen); 
+        border-radius: 50%; width: 24px; height: 24px; 
+      }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      .hero-section { background: #fff; padding: 48px 16px; text-align: center; min-height: 300px; }
+      .font-header { font-family: 'Poppins', sans-serif; font-weight: 700; }
+      h1 { font-size: 1.875rem; color: #1f2937; margin-bottom: 1rem; }
+      p { color: #4b5563; line-height: 1.5; margin: 0; }
+    </style>
+
+    <!-- Fontes e CSS Carregados de forma assíncrona (Não bloqueia renderização) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
-    <!-- Preload da imagem LCP (Hero) -->
+    <!-- Preload da Imagem de LCP com Prioridade Máxima -->
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60" fetchpriority="high">
-
-    <!-- Fontes otimizadas -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind Pre-compilado (Muito mais rápido que o Play CDN) -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <script type="importmap">
 {
@@ -43,52 +85,15 @@
   }
 }
 </script>
-    
-    <style>
-      /* CSS CRÍTICO - Inlined para carregamento instantâneo */
-      :root {
-        --nutriGreen: #4CAF50;
-        --nutriOrange: #FF9800;
-        --nutriBg: #F4F6F8;
-        --nutriText: #333333;
-      }
-      body { 
-        margin: 0; 
-        background-color: var(--nutriBg); 
-        color: var(--nutriText); 
-        font-family: 'Inter', sans-serif;
-        -webkit-font-smoothing: antialiased;
-      }
-      .font-header { font-family: 'Poppins', sans-serif; }
-      .bg-nutriGreen { background-color: var(--nutriGreen); }
-      .text-nutriGreen { color: var(--nutriGreen); }
-      
-      /* Layout inicial sem JS */
-      nav { height: 64px; background: white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 50; }
-      .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; }
-      .spin { 
-        animation: spin 0.8s linear infinite; 
-        border: 3px solid #eee; 
-        border-top: 3px solid var(--nutriGreen); 
-        border-radius: 50%; width: 24px; height: 24px; 
-      }
-      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      
-      /* Utilitários Tailwind básicos necessários para o Hero antes do load total */
-      .bg-white { background-color: #fff; }
-      .relative { position: relative; }
-      .overflow-hidden { overflow: hidden; }
-      .text-center { text-align: center; }
-      .mx-auto { margin-left: auto; margin-right: auto; }
-      .max-w-4xl { max-width: 56rem; }
-    </style>
   </head>
   <body>
     <div id="root">
-      <div class="loading-screen">
-        <div class="text-center">
-          <h1 class="font-header text-nutriGreen" style="font-size: 1.5rem; margin-bottom: 0.5rem;">NutriGuia</h1>
-          <div class="spin mx-auto"></div>
+      <!-- Esqueleto do Hero para LCP rápido enquanto o React carrega -->
+      <nav></nav>
+      <div class="hero-section">
+        <h1 class="font-header">NutriGuia</h1>
+        <div class="loading-screen">
+          <div class="spin"></div>
         </div>
       </div>
     </div>

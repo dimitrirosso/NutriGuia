@@ -37,12 +37,12 @@ export const Home: React.FC = () => {
 
   return (
     <div className="space-y-12 pb-12">
-      {/* Hero Section Otimizada para Mobile LCP */}
-      <section className="relative py-12 md:py-24 px-4 overflow-hidden bg-white">
+      {/* Hero Section Otimizada para LCP e Speed Index */}
+      <section className="relative py-12 md:py-24 px-4 overflow-hidden bg-white min-h-[350px]">
         <div className="absolute inset-0 z-0">
             <img 
                 src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60" 
-                alt="Alimentos saudáveis sobre uma mesa" 
+                alt="Alimentos saudáveis" 
                 className="w-full h-full object-cover opacity-20"
                 fetchPriority="high"
                 decoding="async"
@@ -91,7 +91,7 @@ export const Home: React.FC = () => {
         </Link>
       </section>
 
-      {/* Categories Grid - Lazy Loading implied by browser */}
+      {/* Grid de Categorias - Renderização Lazy Implícita */}
       <section id="categories" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 scroll-mt-24">
         <div className="mb-8">
            <h2 className="font-header text-2xl font-bold text-gray-800">Guia de Alimentos</h2>
