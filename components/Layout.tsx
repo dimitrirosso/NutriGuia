@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Leaf, ArrowLeft, User as UserIcon, Utensils, BookOpen, CalendarDays, Calculator } from 'lucide-react';
@@ -15,7 +16,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { user, isLoading } = useAuth();
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
-  // Define nav links with Icons for better mobile UX
   const navLinks = [
     { name: 'Guia de Alimentos', mobileLabel: 'Alimentos', id: 'categories', icon: Utensils },
     { name: 'Aprenda o Básico', mobileLabel: 'Básico', id: 'basics', icon: BookOpen },
@@ -25,10 +25,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const scrollToSection = (id: string) => {
     if (location.pathname !== '/') {
-      // Se não estiver na home, navega para a home passando o estado
       navigate('/', { state: { scrollTo: id } });
     } else {
-      // Se já estiver na home, faz o scroll direto
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
@@ -36,9 +34,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
   };
 
-  // SPLASH SCREEN: 
-  // Enquanto o Supabase recupera a sessão (isLoading = true), mostramos um loader.
-  // Isso previne que o site mostre estado "deslogado" enquanto carrega.
   if (isLoading) {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-nutriBg animate-in fade-in duration-500">
@@ -50,12 +45,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <span className="font-header font-bold text-2xl text-nutriText tracking-tight">
                         Nutri<span className="text-nutriGreen">Guia</span>
                     </span>
-                    <span className="text-xs text-gray-400 mt-1 font-medium">Carregando seu perfil...</span>
-                </div>
-                <div className="flex gap-1 mt-2">
-                    <div className="w-2 h-2 bg-nutriGreen rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                    <div className="w-2 h-2 bg-nutriGreen rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                    <div className="w-2 h-2 bg-nutriGreen rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    <span className="text-xs text-gray-400 mt-1 font-medium">Sincronizando...</span>
                 </div>
             </div>
         </div>
@@ -68,8 +58,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
+            <Link to="/" className="flex items-center gap-2 group flex-shrink-0" aria-label="Ir para a página inicial">
               <div className="bg-nutriGreen/10 p-2 rounded-full group-hover:bg-nutriGreen/20 transition-colors">
                 <Leaf className="h-6 w-6 text-nutriGreen" />
               </div>
@@ -78,7 +67,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               </span>
             </Link>
             
-            {/* Navigation Links (Desktop) */}
             <div className="hidden lg:flex items-center gap-6 mx-6">
                 {navLinks.map((link) => (
                     <button 
@@ -91,21 +79,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 ))}
             </div>
 
-            {/* Right Side Actions */}
             <div className="flex items-center gap-4">
-                {!isHome && (
-                  <Link to="/" className="text-sm font-medium text-gray-500 hover:text-nutriGreen flex items-center gap-1 transition-colors hidden sm:flex">
-                    <ArrowLeft className="w-4 h-4" />
-                    Voltar
-                  </Link>
-                )}
-
                 {user ? (
-                    <Link to="/profile" className="flex items-center gap-2 pl-4 border-l border-gray-100">
-                        {/* Alterado de 'hidden sm:flex' para 'flex' para aparecer sempre */}
+                    <Link to="/profile" className="flex items-center gap-2 pl-4 border-l border-gray-100" aria-label="Ver meu perfil">
                         <div className="flex flex-col items-end gap-0.5">
                             <span className="text-sm font-bold text-gray-800 leading-none">{user.name}</span>
-                            {user.isPro && <span className="text-[10px] text-nutriOrange font-bold uppercase tracking-wider">Pro Member</span>}
+                            {user.isPro && <span className="text-[10px] text-orange-600 font-black uppercase tracking-wider">Pro Member</span>}
                         </div>
                         <div className="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center border-2 border-transparent hover:border-nutriGreen transition-colors text-gray-600">
                             <UserIcon className="w-5 h-5" />
@@ -123,13 +102,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         </div>
         
-        {/* Mobile Navigation - Linha única compacta com ícones */}
         <div className="lg:hidden border-t border-gray-100 bg-white shadow-sm">
              <div className="grid grid-cols-4 gap-1 p-2">
                  {navLinks.map((link) => (
                     <button 
                         key={link.id}
                         onClick={() => scrollToSection(link.id)}
+                        aria-label={`Ir para seção ${link.name}`}
                         className="flex flex-col items-center justify-center py-2 rounded-xl hover:bg-gray-50 active:bg-green-50 active:scale-95 transition-all group"
                     >
                         <div className="bg-gray-50 p-1.5 rounded-lg mb-1 group-hover:bg-white group-hover:shadow-sm transition-all">

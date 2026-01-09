@@ -7,10 +7,12 @@
     <title>NutriGuia | Guia Visual de Nutrição e Saúde</title>
     <meta name="description" content="Aprenda sobre macronutrientes, calcule seu IMC e gere cardápios inteligentes com IA. O guia definitivo para sua saúde." />
     
-    <!-- Preload de fontes para evitar "pulo" de layout -->
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://esm.sh">
+    
+    <!-- Preload de fontes críticas -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,16 +56,16 @@
     <style>
       body { margin: 0; background-color: #F4F6F8; color: #333333; -webkit-font-smoothing: antialiased; }
       #root { min-height: 100vh; }
-      /* Prevenir shift de layout */
-      .hero-bg { background-image: url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=800&q=60'); }
+      img { max-width: 100%; height: auto; }
     </style>
   </head>
   <body>
     <div id="root">
-      <div style="display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif;">
-        <div style="text-align: center;">
-          <h1 style="color: #4CAF50; margin-bottom: 0.5rem;">NutriGuia</h1>
-          <p style="color: #666;">Otimizando para seu celular...</p>
+      <div style="display: flex; align-items: center; justify-content: center; height: 100vh; background: #F4F6F8;">
+        <div style="text-align: center; font-family: sans-serif;">
+          <h1 style="color: #4CAF50; margin: 0; font-size: 2rem;">NutriGuia</h1>
+          <div style="margin-top: 10px; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #4CAF50; border-radius: 50%; animation: spin 1s linear infinite; display: inline-block;"></div>
+          <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
         </div>
       </div>
     </div>

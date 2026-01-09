@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Bot } from 'lucide-react';
 import { askNutritionist } from '../services/geminiService';
@@ -39,6 +40,7 @@ export const NutriChat: React.FC = () => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
+          aria-label="Abrir chat de dúvidas nutricionais"
           className="bg-nutriGreen hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-transform hover:scale-110 flex items-center gap-2"
         >
           <MessageCircle className="w-6 h-6" />
@@ -48,18 +50,20 @@ export const NutriChat: React.FC = () => {
 
       {isOpen && (
         <div className="bg-white rounded-2xl shadow-2xl w-80 sm:w-96 flex flex-col h-[500px] border border-gray-100 overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-300">
-          {/* Header */}
           <div className="bg-nutriGreen p-4 flex justify-between items-center text-white">
             <div className="flex items-center gap-2">
               <Bot className="w-5 h-5" />
               <h3 className="font-bold">NutriBot</h3>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 rounded-full p-1">
+            <button 
+              onClick={() => setIsOpen(false)} 
+              aria-label="Fechar chat"
+              className="hover:bg-white/20 rounded-full p-1"
+            >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Messages */}
           <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-gray-50">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -88,18 +92,19 @@ export const NutriChat: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
           <form onSubmit={handleSubmit} className="p-3 bg-white border-t border-gray-100 flex gap-2">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Digite sua dúvida..."
+              aria-label="Sua pergunta"
               className="flex-grow bg-gray-100 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-nutriGreen/50 text-gray-700"
             />
             <button 
               type="submit" 
               disabled={isLoading || !input.trim()}
+              aria-label="Enviar pergunta"
               className="bg-nutriGreen text-white p-2 rounded-full hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <Send className="w-4 h-4" />
